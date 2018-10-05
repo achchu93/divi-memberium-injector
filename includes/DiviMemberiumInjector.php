@@ -9,7 +9,7 @@ class DMI_DiviMemberiumInjector extends DiviExtension {
 	 *
 	 * @var string
 	 */
-	public $gettext_domain = 'dmi-divi-memberium-injector';
+	public $gettext_domain = 'divi-memb-inject';
 
 	/**
 	 * The extension's WP Plugin name.
@@ -40,13 +40,14 @@ class DMI_DiviMemberiumInjector extends DiviExtension {
 		$this->plugin_dir_url = plugin_dir_url( $this->plugin_dir );
 
 		parent::__construct( $name, $args );
+        $this->_debug = false;
 	}
 
 	protected function _initialize()
     {
         parent::_initialize();
         add_action( 'admin_enqueue_scripts', array( $this, 'dmi_admin_enqueue_scripts' ), 11 );
-        $this->setup_actions_data();
+        add_action('wp_ajax_dmi_get_actions_list', array($this, 'dmi_get_actions_list'));
     }
 
     public function dmi_admin_enqueue_scripts()
@@ -55,7 +56,7 @@ class DMI_DiviMemberiumInjector extends DiviExtension {
         wp_enqueue_script("dmi-backend-js", $this->plugin_dir_url . "scripts/backend.js", array('jquery', 'et_pb_admin_js'), null, true);
     }
 
-    public function setup_actions_data()
+    public function dmi_get_actions_list()
     {
         global $wpdb, $post;
         $options = get_option('i2sdk');
@@ -69,7 +70,8 @@ class DMI_DiviMemberiumInjector extends DiviExtension {
                 $actions_data[] = array("id" => $action["id"], "text" => $action["name"] . " (". $action['id'] .")");
             }
         }
-        echo '<script>window.actionslist = '.json_encode($actions_data).'</script>';
+
+        wp_send_json_success($actions_data);
     }
 }
 

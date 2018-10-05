@@ -7,18 +7,18 @@ import './style.css';
 
 class MemberiumActionSetButton extends Component {
 
-  static slug = 'dmi_memberium_action_set_button';
+    static slug = 'dmi_button';
 
-      render() {
-          return (
-              <Fragment>
-                  <h1 className="simp-simple-header-heading">aasdsda</h1>
-                  <p>
-                      arshad
-                  </p>
-              </Fragment>
-          );
-      }
+    render() {
+        return (
+            <Fragment>
+                <h1 className="dmi_button">{this.props.heading}</h1>
+                <p>
+                    {this.props.content()}
+                </p>
+            </Fragment>
+        );
+    }
 }
 
 export default MemberiumActionSetButton;

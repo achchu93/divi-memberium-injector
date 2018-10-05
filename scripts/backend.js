@@ -2,12 +2,28 @@
 
 jQuery(function($) {
     $(document).ready(function(){
+        var actionslist = [];
+        $.ajax({
+            url: ajaxurl,
+            type: "POST",
+            data: {
+                action: "dmi_get_actions_list"
+            },
+            success: function(response){
+               actionslist = response.data;
+            },
+            error:function(error){
+                console.log(error);
+            }
+        });
+
+
         ET_PageBuilder.Events.listenTo(ET_PageBuilder.Events, "et-pb-loading:ended", function(e){
             setTimeout(function () {
                 var module = $("body").find(".et_pb_module_settings").data("module_type");
                 if(typeof module !== "undefined" && module == "dmi_button"){
                     $("#et_pb_action_ids").memb_select2({
-                        data: actionslist,  //actionlist is already defined global variable.
+                        data: actionslist,
                         multiple: true,
                         minimumInputLength: 3,
                         sortResults: function(result, el, term){
@@ -28,7 +44,6 @@ jQuery(function($) {
                     });
                 }
             }, 150);
-
         });
     });
 });
