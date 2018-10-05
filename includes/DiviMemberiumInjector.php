@@ -46,11 +46,30 @@ class DMI_DiviMemberiumInjector extends DiviExtension {
     {
         parent::_initialize();
         add_action( 'admin_enqueue_scripts', array( $this, 'dmi_admin_enqueue_scripts' ), 11 );
+        $this->setup_actions_data();
     }
 
     public function dmi_admin_enqueue_scripts()
     {
+        wp_enqueue_style("dmi-backend-css", $this->plugin_dir_url . "styles/admin.css", array(), null, "all");
         wp_enqueue_script("dmi-backend-js", $this->plugin_dir_url . "scripts/backend.js", array('jquery', 'et_pb_admin_js'), null, true);
+    }
+
+    public function setup_actions_data()
+    {
+        global $wpdb, $post;
+        $options = get_option('i2sdk');
+        $app_name = isset($options["app_name"]) ? $options["app_name"] : "";
+        $query = "SELECT * FROM " . MEMBERIUM_DB_ACTIONSETS . " WHERE appname = '{$app_name}'";
+        $actions_sets = $wpdb->get_results($query, ARRAY_A);
+        $actions_data = array();
+
+        if(count($actions_sets)){
+            foreach ($actions_sets as $action){
+                $actions_data[] = array("id" => $action["id"], "text" => $action["name"] . " (". $action['id'] .")");
+            }
+        }
+        echo '<script>window.actionslist = '.json_encode($actions_data).'</script>';
     }
 }
 

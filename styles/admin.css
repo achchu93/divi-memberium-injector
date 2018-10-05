@@ -1,0 +1,18 @@
+.memb_select2-container.dmi_button_select2_container .memb_select2-choices {
+    border-radius: 4px;
+    border: none;
+    box-shadow: none;
+    background: #F1F5F9;
+    padding: 10px;
+    font-size: 14px;
+}
+.memb_select2-container.dmi_button_select2_container .memb_select2-choices .memb_select2-search-choice {
+    background: #fff;
+    border: none;
+    padding: 8px 5px 8px 18px;
+}
+.memb_select2-container.dmi_button_select2_container .memb_select2-choices .memb_select2-search-choice .memb_select2-search-choice-close {
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
