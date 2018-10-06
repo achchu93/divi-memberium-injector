@@ -39,8 +39,9 @@ class DMI_DiviMemberiumInjector extends DiviExtension {
 		$this->plugin_dir     = plugin_dir_path( __FILE__ );
 		$this->plugin_dir_url = plugin_dir_url( $this->plugin_dir );
 
+        define('DMI_DEBUG', true);
+
 		parent::__construct( $name, $args );
-        $this->_debug = false;
 	}
 
 	protected function _initialize()

@@ -8,6 +8,7 @@ class DMI_MemberiumActionSetButton extends ET_Builder_Module {
     function init() {
         $this->name       = esc_html__( 'Memberium Action Button', 'divi-memb-inject' );
         $this->plural     = esc_html__( 'Memberium Action Buttons', 'divi-memb-inject' );
+        $this->main_css_element = '%%order_class%%';
 
         $this->custom_css_fields = array(
             'main_element' => array(
@@ -33,6 +34,50 @@ class DMI_MemberiumActionSetButton extends ET_Builder_Module {
                         'priority' => 49,
                     ),
                 ),
+            ),
+        );
+        $this->advanced_fields = array(
+            'borders'               => array(
+                'default' => false,
+            ),
+            'button'                => array(
+                'button' => array(
+                    'label' => esc_html__( 'Button', 'divi-memb-inject' ),
+                    'css' => array(
+                        'main' => $this->main_css_element,
+                    ),
+                    'box_shadow' => false,
+                ),
+            ),
+            'margin_padding' => array(
+                'css' => array(
+                    'padding' => "{$this->main_css_element}_wrapper {$this->main_css_element}, {$this->main_css_element}_wrapper {$this->main_css_element}:hover",
+                    'margin' => "{$this->main_css_element}_wrapper",
+                    'important' => 'all',
+                ),
+            ),
+            'text'                  => array(
+                'use_text_orientation' => false,
+                'use_background_layout' => true,
+                'options' => array(
+                    'background_layout' => array(
+                        'default_on_front' => 'light',
+                    ),
+                ),
+            ),
+            'text_shadow'           => array(
+                // Text Shadow settings are already included on button's advanced style
+                'default' => false,
+            ),
+            'background'            => false,
+            'fonts'                 => false,
+            'max_width'             => false,
+        );
+
+        $this->help_videos = array(
+            array(
+                'id'   => esc_html( 'XpM2G7tQQIE' ),
+                'name' => esc_html__( 'An introduction to the Button module', 'divi-memb-inject' ),
             ),
         );
     }
@@ -244,6 +289,14 @@ class DMI_MemberiumActionSetButton extends ET_Builder_Module {
             $args['has_wrapper'] ? '<div class="et_pb_button_wrapper">' : '',
             $args['has_wrapper'] ? '</div>' : '',
             '' !== $args['button_id'] ? sprintf( ' id="%1$s"', esc_attr( $args['button_id'] ) ) : ''
+        );
+    }
+
+    protected function _render_module_wrapper($output = '', $render_slug = '')
+    {
+        return sprintf(
+            '%1$s',
+            $output
         );
     }
 
